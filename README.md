@@ -165,3 +165,40 @@ end
 
 <p>как видим, мы вошли в систему под пользователем vagrant с новым паролем.</p>
 
+<br />
+
+
+
+<p><b>Способ 3. rw init=/sysroot/bin/sh</b></p>
+
+<p>В строке, которая начинается с linux вместо ro заменим на rw, а в конце добавим init=/sysroot/bin/sh, заодно удалим rhgb и quiet для полноты информации во время загрузки:</p>
+
+![image](https://user-images.githubusercontent.com/96518320/174393201-05aba37f-4167-4133-993a-747d615714a3.png)
+
+<p>и нажимаем сtrl-x для загрузки в систему.</p>
+
+<p>Попадаем в консоль рутовой файловой системы <br /> :/#</p>
+
+![image](https://user-images.githubusercontent.com/96518320/174393352-1657c8b5-a6d1-40e3-869a-7f281a9ab84f.png)
+
+<p>При этом файловая система сразу монтируется в режиме Read-Write.</p>
+
+<p>Установим новый пароль, например, vagrant789 для пользователя vagrant командой: <br />:/# passwd vagrant</p>
+
+![image](https://user-images.githubusercontent.com/96518320/174394152-1874b403-6475-4d2a-94a1-c56772b4adf1.png)
+
+<p>В корне создадим файл .autorelabel: <br />:/# touch /.autorelabel</p>
+
+![image](https://user-images.githubusercontent.com/96518320/174394259-26114eb8-18ca-47dc-bf5c-b62a9ea64cfa.png)
+
+<p>Перезапустим виртуальную машину.</p>
+
+![image](https://user-images.githubusercontent.com/96518320/174394401-6532ee64-7e35-45f8-8464-612661fca18c.png)
+
+![image](https://user-images.githubusercontent.com/96518320/174394738-b6602c05-c703-4e52-a040-dc788b35c2ce.png)
+
+<p>Вводим логин vagrant и пароль vagrant789</p>
+
+![image](https://user-images.githubusercontent.com/96518320/174394812-ec30dfb5-eb72-4f06-a5ee-72ef60da48c2.png)
+
+<p>как видим, мы вошли в систему под пользователем vagrant с новым паролем.</p>
