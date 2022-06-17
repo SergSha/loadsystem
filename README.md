@@ -69,7 +69,7 @@ end
 
 ![image](https://user-images.githubusercontent.com/96518320/174353922-6fb16908-00b7-4ea9-b07d-29136227c1b6.png)
 
-<p style="font-height: bold">Способ 1. init=/bin/sh</p>
+<p><b>Способ 1. init=/bin/sh</b></p>
 
 <p>В конце строки, которая начинается с linux16 добавим init=/bin/sh, заодно удалим rhgb и quiet для полноты информации во время загрузки:</p>
 
@@ -109,7 +109,7 @@ end
 
 <p>как видим, мы вошли в систему под пользователем vagrant с новым паролем.</p>
 
-<p style="font-height: bold">Способ 2. rd.break</p>
+<p><b>Способ 2. rd.break</b></p>
 
 
 
