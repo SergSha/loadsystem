@@ -33,7 +33,6 @@
 # # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-#  config.vm.box = "centos/7"
   config.vm.box = 'almalinux/8'
   config.vm.network :forwarded_port, guest: 22, host: 4000
 
@@ -212,4 +211,48 @@ end
 
 <h4># 2. Установить систему с LVM, после чего переименовать VG</h4>
 
+<p>Создадим файл Vagrantfile:</p>
 
+<pre>[student@pv-homeworks1-10 nfs]$ vi ./Vagrantfile</pre>
+
+<p>Заполним следующим содержимым:</p>
+
+<pre># -*- mode: ruby -*-
+# # vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = 'almalinux/8'
+  config.vm.network :forwarded_port, guest: 22, host: 4000
+
+  config.vm.define "loadsystem" do |loadsystem|
+
+    loadsystem.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    end
+
+    loadsystem.vm.disk :disk, size: "1GB", name: "disk1"
+    loadsystem.vm.host_name = 'loadsystem'
+    loadsystem.vm.network :private_network, ip: "192.168.56.141"
+
+  end
+end
+</pre>
+
+<p>Запустим виртуальную машину:</p>
+
+<pre>[user@localhost loadsystem]$ vagrant up</pre>
+
+<p>Заходим в виртуальную машину:</p>
+
+<pre>[user@localhost loadsystem]$ vagrant ssh
+[vagrant@loadsystem ~]$</pre>
+
+<p>Заходим под правами root:</p>
+
+<pre>[vagrant@loadsystem ~]$ sudo -i
+[root@loadsystem ~]#</pre>
+
+<p>Первым делом посмотрим текущее состояние системы:</p>
+
+<pre></pre>
