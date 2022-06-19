@@ -25,7 +25,7 @@
 
 <p>Создадим файл Vagrantfile:</p>
 
-<pre>[student@pv-homeworks1-10 nfs]$ vi ./Vagrantfile</pre>
+<pre>[user@localhost loadsystem]$ vi ./Vagrantfile</pre>
 
 <p>Заполним следующим содержимым:</p>
 
