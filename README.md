@@ -527,3 +527,4 @@ mytest
 
 ![image](https://user-images.githubusercontent.com/96518320/174483606-9f9e36e9-69f8-47cd-a5a4-adad2621a8e0.png)
 
+<p>Как мы видим, при загрузке в терминале в течение 10 секунд отображается пингвин.</p>
