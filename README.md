@@ -404,7 +404,6 @@ GRUB_DISABLE_RECOVERY="true"
 <p>Пересоздадим initrd image, чтобы он понимал новое название Volume Group:</p>
 
 <pre>[root@lvm ~]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
-Executing: /sbin/dracut -f -v /boot/initramfs-3.10.0-862.2.3.el7.x86_64.img 3.10.0-862.2.3.el7.x86_64
 ...
 *** Creating image file ***
 *** Creating image file done ***
@@ -426,3 +425,84 @@ Last login: Sun Jun 19 10:24:34 2022 from 10.0.2.2
 [root@lvm ~]#</pre>
 
 <p>Как видим, система загрузилась с новым названием Volume Group.</p>
+
+<br />
+
+<h4># 3. Добавить модуль в initrd</h4>
+
+<p>Скрипты модулей хранятся в каталоге /usr/lib/dracut/modules.d/. <br />Для того чтобы добавить свой модуль создаем там папку с именем 01mytest:</p>
+
+<pre>[root@lvm ~]# mkdir /usr/lib/dracut/modules.d/01mytest
+[root@lvm ~]#</pre>
+
+<p>Переходим в только что созданную директорию:</p>
+
+<pre>[root@lvm ~]# cd /usr/lib/dracut/modules.d/01mytest/
+[root@lvm 01mytest]#</pre>
+
+<p>и создадим два скрипта <br />module-setup.sh - который устанавливает модуль и вызывает скрипт mytest.sh:</p>
+
+<pre>[root@lvm 01mytest]# vi ./module-setup.sh</pre>
+
+<pre>#!/bin/bash
+
+check() {
+    return 0
+}
+
+depends() {
+    return 0
+}
+
+install() {
+    inst_hook cleanup 00 "${moddir}/mytest.sh"
+}
+</pre>
+
+<p>mytest.sh - собственно сам вызываемый скрипт, в нём у нас рисуется пингвинчик:</p>
+
+<pre>[root@lvm 01mytest]# vi ./mytest.sh</pre>
+
+<pre>#!/bin/bash
+
+exec 0<>/dev/console 1<>/dev/console 2<>/dev/console
+cat <<'msgend'
+Hello! You are in dracut module!
+ ___________________
+< I'm dracut module >
+ -------------------
+   \
+    \
+        .--.
+       |o_o |
+       |:_/ |
+      //   \ \
+     (|     | )
+    /'\_   _/`\
+    \___)=(___/
+msgend
+sleep 10
+echo " continuing...."
+</pre>
+
+<p>Дадим этим скриптам права на исполнение:</p>
+
+<pre>[root@lvm 01mytest]# chmod +x ./{module-setup,mytest}.sh 
+[root@lvm 01mytest]#</pre>
+
+<p>Пересобираем initrd image:</p>
+
+<pre>[root@lvm 01mytest]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
+...
+*** Creating image file ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-862.2.3.el7.x86_64.img' done ***
+[root@lvm 01mytest]#</pre>
+
+<p>Проверим, заргузился ли наш модуль mytest:</p>
+
+<pre>[root@lvm 01mytest]# lsinitrd -m /boot/initramfs-$(uname -r).img | grep mytest
+mytest
+[root@lvm 01mytest]#</pre>
+
+<p>Для того чтобы увидеть действия этого нового модуля в /boot/grub2/grub.cfg уберём опции ghb и quiet</p>
