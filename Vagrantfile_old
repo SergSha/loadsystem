@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# # vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  #config.vm.box = "centos/7"
+  config.vm.box = 'almalinux/8'
+
+  config.vm.define "loadsystem" do |loadsystem|
+    #loadsystem.vm.box = "centos/7"
+    loadsystem.vm.hostname = "loadsystem"
+    #loadsystem.vm.network "private_network", type "dhcp"
+    loadsystem.vm.network "private_network", ip: "192.168.56.142"
+  end
+
+  config.vm.provider "virtualbox" do |loadsystem|
+      loadsystem.name = "loadsystem"
+      loadsystem.cpus = 1
+      loadsystem.memory = "1024"
+  end
+
+  #loadsystem.vm.provision "shell", inline: <<-SHELL
+    #yum update
+  #SHELL
+
+end
