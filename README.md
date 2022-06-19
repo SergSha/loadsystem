@@ -505,4 +505,25 @@ echo " continuing...."
 mytest
 [root@lvm 01mytest]#</pre>
 
-<p>Для того чтобы увидеть действия этого нового модуля в /boot/grub2/grub.cfg уберём опции ghb и quiet</p>
+<p>Для того чтобы увидеть действия этого нового модуля в /boot/grub2/grub.cfg уберём опции rhgb и quiet</p>
+
+<pre>[root@lvm 01mytest]# vi /boot/grub2/grub.cfg</pre>
+
+<pre>
+...
+        linux16 /vmlinuz-3.10.0-862.2.3.el7.x86_64 root=/dev/mapper/LoadSystemRoot-LogVol00 ro no_timer_check console=tty0 console=ttyS0,115200n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=LoadSystemRoot/LogVol00 rd.lvm.lv=LoadSystemRoot/LogVol01 rhgb quiet
+...
+</pre>
+
+<pre>
+...
+        linux16 /vmlinuz-3.10.0-862.2.3.el7.x86_64 root=/dev/mapper/LoadSystemRoot-LogVol00 ro no_timer_check console=tty0 console=ttyS0,115200n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=LoadSystemRoot/LogVol00 rd.lvm.lv=LoadSystemRoot/LogVol01 
+...
+</pre>
+
+<p>Перезагружаемся</p>
+
+<pre>[root@lvm 01mytest]# shutdown -r now</pre>
+
+![image](https://user-images.githubusercontent.com/96518320/174483606-9f9e36e9-69f8-47cd-a5a4-adad2621a8e0.png)
+
